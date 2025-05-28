@@ -29,7 +29,7 @@ class Node {
   public static void preOrder(Node root) {
       if(root == nulll) return;
 
-      System.out.Println(root.data);
+      System.out.print(root.data + " ");
       preOrder(root.left);
       preOrder(root.right);
     }
