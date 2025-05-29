@@ -110,7 +110,7 @@ public class BinarySearchTree {
   public boolean searchBST(Node r, int val) {
     if (r.getData() == val) {
       return true;
-    } else if (val > r.getLeft().getData()) {
+    } else if (val > r.getData()) {
       searchBST(r.getRight(), val);
     } else {
       searchBST(r.getLeft(), val);
