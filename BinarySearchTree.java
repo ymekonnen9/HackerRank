@@ -1,65 +1,65 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BinaryTree<T> {
+public class BinarySearchTree {
 
-  private static class Node<T> {
-    private T data;
-    private Node<T> parent;
-    private Node<T> left;
-    private Node<T> right;
+  private static class Node {
+    private int data;
+    private Node parent;
+    private Node left;
+    private Node right;
 
-    public Node(T t) {
+    public Node(int t) {
       this.data = t;
       this.parent = null;
       this.left = null;
       this.right = null;
     }
 
-    public T getData() {
+    public int getData() {
       return data;
     }
 
-    public Node<T> getParent() {
+    public Node getParent() {
       return parent;
     }
 
-    public Node<T> getLeft() {
+    public Node getLeft() {
       return left;
     }
 
-    public Node<T> getRight() {
+    public Node getRight() {
       return right;
     }
 
-    public void setParent(Node<T> p) {
+    public void setParent(Node p) {
       this.parent = p;
     }
 
-    public void setLeft(Node<T> l) {
+    public void setLeft(Node l) {
       this.left = l;
     }
 
-    public void setRight(Node<T> r) {
+    public void setRight(Node r) {
       this.right = r;
     }
   }
 
-  private Node<T> root;
+  private Node root;
 
-  public BinaryTree() {
+  public BinarySearchTree() {
     root = null;
   }
 
-  public void setRoot(T t) {
-    root = new Node<T>(t);
+  public void setRoot(Integer t) {
+    root = new Node(t);
   }
 
-  public Node<T> getRoot() {
+  public Node getRoot() {
     return root;
   }
 
-  public void preOrder(Node<T> node) {
+  public void preOrder(Node node) {
     if (node == null) {
       return;
     }
@@ -68,7 +68,7 @@ public class BinaryTree<T> {
     preOrder(node.getRight());
   }
 
-  public void postOrder(Node<T> node) {
+  public void postOrder(Node node) {
     if (node == null) {
       return;
     }
@@ -79,7 +79,7 @@ public class BinaryTree<T> {
 
   }
 
-  public void inOrder(Node<T> node) {
+  public void inOrder(Node node) {
     if (node == null)
       return;
 
@@ -88,15 +88,15 @@ public class BinaryTree<T> {
     inOrder(node.getRight());
   }
 
-  public void levelTraversal(Node<T> node) {
+  public void levelTraversal(Node node) {
     if (node == null)
       return;
 
-    Queue<Node<T>> queue = new LinkedList<>();
+    Queue<Node> queue = new LinkedList<>();
     queue.offer(node);
 
     while (!queue.isEmpty()) {
-      Node<T> currentNode = queue.poll();
+      Node currentNode = queue.poll();
       System.out.print(currentNode.getData() + " ");
       if (currentNode.getLeft() != null) {
         queue.offer(currentNode.getLeft());
@@ -105,6 +105,18 @@ public class BinaryTree<T> {
         queue.offer(currentNode.getRight());
       }
     }
+  }
+
+  public boolean searchBST(Node r, int val) {
+    if (r.getData() == val) {
+      return true;
+    } else if (val > r.getLeft().getData()) {
+      searchBST(r.getRight(), val);
+    } else {
+      searchBST(r.getLeft(), val);
+    }
+
+    return false;
   }
 
 }
