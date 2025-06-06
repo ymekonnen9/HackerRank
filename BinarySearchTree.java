@@ -1,4 +1,3 @@
-import java.text.NumberFormat.Style;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -119,6 +118,20 @@ public class BinarySearchTree {
 
   public boolean searchFromRoot(int n) {
     return search(root, n);
+  }
+
+  public Node insertNodes(Node root, int l) {
+    if (root == null) {
+      root = new Node(l);
+    }
+
+    if (l > root.getElement()) {
+      insertNodes(root.getRight(), l);
+    } else if (l < root.getElement()) {
+      insertNodes(root.getRight(), l);
+    }
+
+    return root;
   }
 
 }
