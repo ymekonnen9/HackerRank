@@ -1,129 +1,124 @@
+import java.text.NumberFormat.Style;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BinarySearchTree<Integer> {
-  public static class Node<Integer> {
-    private int data;
-    private Node<Integer> parent;
-    private Node<Integer> left;
-    private Node<Integer> right;
+public class BinarySearchTree {
+  private static class Node {
+    private int ele;
+    private Node parent;
+    private Node left;
+    private Node right;
 
-    public Node(int num) {
-      data = num;
-      parent = null;
-      left = null;
-      right = null;
+    public Node(int e) {
+      this.ele = e;
+      this.parent = null;
+      this.left = null;
+      this.right = null;
     }
 
-    public int getData() {
-      return data;
+    public int getElement() {
+      return ele;
     }
 
-    public Node<Integer> getParent() {
-      return this.parent;
+    public Node getParent() {
+      return parent;
     }
 
-    public Node<Integer> getLeft() {
-      return this.left;
+    public Node getLeft() {
+      return left;
     }
 
-    public Node<Integer> getRight() {
-      return this.right;
+    public Node getRight() {
+      return right;
     }
 
-    public void setParent(Node<Integer> p) {
-      this.parent = p;
+    public void setParent(Node n) {
+      this.parent = n;
     }
 
-    public void setLeft(Node<Integer> l) {
-      this.left = l;
+    public void setLeft(Node n) {
+      this.left = n;
     }
 
-    public void setRight(Node<Integer> r) {
-      this.right = r;
+    public void setRight(Node n) {
+      this.right = n;
     }
   }
 
-  private Node<Integer> root;
+  private Node root;
 
-  public BinarySearchTree() {
-    root = null;
+  public BinarySearchTree(Node n) {
+    this.root = n;
   }
 
-  public BinarySearchTree(int num) {
-    root = new Node<>(num);
+  public Node getRoot() {
+    return this.root;
   }
 
-  public Node<Integer> getRoot() {
-    return root;
+  public void setRoot(int n) {
+    this.root = new Node(n);
   }
 
-  public void preOrder(Node<Integer> roo) {
-    if (roo == null)
+  public void preOrder(Node n) {
+    if (n == null)
       return;
-    System.out.print(roo.getData() + " ");
-    preOrder(roo.getLeft());
-    preOrder(roo.getRight());
+    System.out.print(n.getElement());
+    preOrder(n.getLeft());
+    preOrder(n.getRight());
   }
 
-  public void postOrder(Node<Integer> roo) {
-    if (roo == null)
+  public void postOrder(Node n) {
+    if (n == null)
       return;
-    postOrder(roo.getLeft());
-    postOrder(roo.getRight());
-    System.out.print(roo.getData() + " ");
-
-  }
-
-  public void inOrder(Node<Integer> roo) {
-    if (roo == null)
-      return;
-    inOrder(roo.getLeft());
-    System.out.print(roo.getData());
-    inOrder(roo.getRight());
+    postOrder(n.getLeft());
+    postOrder(n.getRight());
+    System.out.print(n.getElement());
 
   }
 
-  public void levelTraversal(Node<Integer> roo) {
-    if (roo == null)
+  public void inOrder(Node n) {
+    if (n == null)
       return;
-    Queue<Node<Integer>> queue = new LinkedList<>();
-    queue.offer(roo);
-    if (!queue.isEmpty()) {
-      Node<Integer> currentNode = queue.poll();
-      System.out.print(currentNode.getData() + " ");
-      if (currentNode.getLeft() != null) {
-        queue.offer(currentNode.getLeft());
-      } else if (currentNode.getRight() != null) {
-        queue.offer(currentNode.getRight());
+    inOrder(n.getLeft());
+    System.out.println(n.getElement());
+    inOrder(n.getRight());
+  }
+
+  public void levelOrder(Node n) {
+    if (n == null)
+      return;
+    Queue<Node> queue = new LinkedList<>();
+    queue.offer(n);
+
+    while (!queue.isEmpty()) {
+      Node current = queue.poll();
+      System.out.println(current.getElement());
+      if (current.getLeft() != null) {
+        queue.offer(n.getLeft());
+      }
+      if (current.getRight() != null) {
+        queue.offer(n.getRight());
       }
     }
   }
 
-  public boolean bstSearch(Node<Integer> roo, int val) {
-    if (roo == null)
+  public boolean search(Node node, int n) {
+    if (node == null)
       return false;
-    if (roo.getData() == val)
+    if (node.getElement() == n)
       return true;
-    if (val < roo.getData()) {
-      return bstSearch(roo.getLeft(), val);
-    } else {
-      return bstSearch(roo.getRight(), val);
+
+    if (node.getLeft() != null) {
+      return search(node.getLeft(), n);
+    } else if (node.getRight() != null) {
+      return search(node.getRight(), n);
     }
+
+    return false;
   }
 
-  public Node<Integer> recursiveInsert(Node<Integer> node, int val) {
-    if (node == null) {
-      return new Node<>(val);
-    } else if (val < node.getData()) {
-      node.setLeft(recursiveInsert(node.getLeft(), val));
-    } else if (val > node.getData()) {
-      node.setRight(recursiveInsert(node.getRight(), val));
-    }
-    return node;
+  public boolean searchFromRoot(int n) {
+    return search(root, n);
   }
 
-  public void insert(int val) {
-    root = recursiveInsert(root, val);
-  }
 }
